@@ -64,12 +64,14 @@ public class NeighborhoodLibrary {
         System.out.print("What is (ID) of the book you want to checkout?: ");
         int bookIdChoosen = scanner.nextInt();
         scanner.nextLine(); //catch scanner buffer
-        boolean updateIsCheckedOut = false;
         String bookTitle = "";
+        boolean updateIsCheckedOut = false;
+        Boolean checkIfBookIDExits = false;
 
         for(Book book : bookInventory){
             if(bookIdChoosen == book.getId()){
                 bookTitle = book.getTitle();
+                checkIfBookIDExits = true; // Set to true when book is found
                 break;
             }
         }
@@ -77,7 +79,9 @@ public class NeighborhoodLibrary {
         for(Book book : bookInventory){
             if(bookIdChoosen == book.getId() && !book.isCheckedOut()){
                 updateIsCheckedOut = true;
-                System.out.print("What is your name sweetie So I can check you out? ");
+                checkIfBookIDExits = true;
+                System.out.printf("The Book: %s is Avaliable for checkout \n",book.getTitle());
+                System.out.print("May I have your name for checkout, please? ");
                 book.setCheckedOutTo(scanner.nextLine());
                 book.setCheckedOut(updateIsCheckedOut);
                 System.out.println();
@@ -98,9 +102,9 @@ public class NeighborhoodLibrary {
             }
         }
 
-
-        //TODO: FIX ERROR FOR OUT OF BOUNDS
-        if(!updateIsCheckedOut){
+        if(!checkIfBookIDExits){
+            System.out.printf("Sorry the book of ID: %d does not exist in our inventory\n", bookIdChoosen);
+        }else if(!updateIsCheckedOut){
             System.out.printf("Sorry the book of ID: %d - Title: %s is checked out already sorry!\n", bookIdChoosen, bookTitle);
         }
 
