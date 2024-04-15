@@ -1,12 +1,14 @@
 package com.pluralsight;
 
 public class Book {
+    // Set Variables at top level for use.
     private int id;
     private String isbn;
     private String title;
     private boolean isCheckedOut;
     private String checkedOutTo;
 
+    // Constructor to set each value
     public Book(int id, String isbn, String title, boolean isCheckedOut, String checkedOutTo) {
         this.id = id;
         this.isbn = isbn;
@@ -15,6 +17,7 @@ public class Book {
         this.checkedOutTo = checkedOutTo;
     }
 
+    // Following below are our setters and getters- To set and to display data
     public boolean isCheckedOut() {
         return isCheckedOut;
     }
@@ -54,12 +57,5 @@ public class Book {
     public void setCheckedOutTo(String checkedOutTo) {
         this.checkedOutTo = checkedOutTo;
     }
-    // TODO: DO METHODS
-    public static void checkOut(String name) {
-        System.out.println();
-    }
 
-    public static void checkIn() {
-        System.out.println();
-    }
 }

@@ -5,15 +5,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class NeighborhoodLibrary {
+    // Initialize an array of Books of the class book of size 20
     static Book[] bookInventory = new Book[20];
-    public static void main(String[] args) {
-        preLoadBooks();
-        displayHomeScreen();
 
+    public static void main(String[] args) {
+        // Populate books to an array
+        preLoadBooks();
+        // Run Program
+        displayHomeScreen();
     }
 
     public static void displayHomeScreen() {
         Scanner scanner = new Scanner(System.in);
+        // Ask the user for two options
         System.out.println("*************** Welcome to Javapedia Library ***************");
         System.out.println("What can we help you with today? ");
         System.out.println("-(1)- Show Available Books\n-(2)- Show Checked Out Books\n-(3)- Exit");
@@ -29,6 +33,7 @@ public class NeighborhoodLibrary {
             case "3":
                 System.out.println("Exiting...");
                 break;
+            // If user types in wrong option it returns the method again
             default:
                 System.out.println("Invalid option! Please choose again.\n");
                 displayHomeScreen(); // Display the home screen again for invalid input
@@ -36,28 +41,35 @@ public class NeighborhoodLibrary {
         }
     }
 
-    public static void showAvailableBooks(Scanner scanner){
+    public static void showAvailableBooks(Scanner scanner) {
         System.out.println("\nAvailable Javapedia Books:");
         System.out.println("****************************************************");
+        // Make a MAX starting variable
         int amountOfCheckedOutBooks = 20;
-        for(Book book : bookInventory){
-            if(!book.isCheckedOut()){
+        for (Book book : bookInventory) {
+            if (!book.isCheckedOut()) {
+                // Decrement everytime a book shows up available
                 amountOfCheckedOutBooks--;
                 System.out.printf("Title: %s - ID: %d  - ISBN: %s \n", book.getTitle(), book.getId(), book.getIsbn());
                 System.out.println("****************************************************");
             }
-            }
+        }
 
-        if(amountOfCheckedOutBooks == 20){
+        // Prompt user if no books are available
+        if (amountOfCheckedOutBooks == 20) {
             System.out.println("it seems like all books have been checked out");
             System.out.println("Please come back again later and see if we have books available");
             System.out.println("What would you like to do? ");
             System.out.println("-(1)- Check in a book\n-(2)- Go back home?");
             System.out.print("Enter your command: ");
             String userChoice = scanner.nextLine();
-            switch (userChoice){
-                case "1": showCheckedOutBooks(scanner); break;
-                case "2": displayHomeScreen(); break;
+            switch (userChoice) {
+                case "1":
+                    showCheckedOutBooks(scanner);
+                    break;
+                case "2":
+                    displayHomeScreen();
+                    break;
                 default:
                     System.out.println("Invalid option! Please choose again.\n");
                     showCheckedOutBooks(scanner); // Display the books screen again for invalid input
@@ -65,14 +77,19 @@ public class NeighborhoodLibrary {
             }
         }
 
+        // If there are enough books for checkout prompt user what to do
         System.out.println("Did you see a book your interested in within our Javapedia Libary?");
         System.out.println("What would you like to do? ");
         System.out.println("-(1)- Check out a book\n-(2)- Go back home?");
         System.out.print("Enter your command: ");
         String userChoice = scanner.nextLine();
-        switch (userChoice){
-            case "1": checkoutBook(scanner); break;
-            case "2": displayHomeScreen(); break;
+        switch (userChoice) {
+            case "1":
+                checkoutBook(scanner);
+                break;
+            case "2":
+                displayHomeScreen();
+                break;
             default:
                 System.out.println("Invalid option! Please choose again.\n");
                 showAvailableBooks(scanner); // Display the books screen again for invalid input
@@ -80,29 +97,34 @@ public class NeighborhoodLibrary {
         }
     }
 
-    //** copy
-    public static void showCheckedOutBooks(Scanner scanner){
+    public static void showCheckedOutBooks(Scanner scanner) {
         System.out.println("\nAll Checked Out Javapedia Books:");
         System.out.println("****************************************************");
+        // Make a starting variable for books
         int amountOfCheckedOutBooks = 0;
-        for(Book book : bookInventory){
-            if(book.isCheckedOut()){
+        for (Book book : bookInventory) {
+            if (book.isCheckedOut()) {
+                // Increment everytime a book shows up available
                 amountOfCheckedOutBooks++;
                 System.out.printf("Title: %s - ID: %d  - ISBN: %s \n", book.getTitle(), book.getId(), book.getIsbn());
                 System.out.printf("%s has this book checked out currently\n", book.getCheckedOutTo());
                 System.out.println("****************************************************");
             }
         }
-
-        if(amountOfCheckedOutBooks == 0){
+        // Prompt user if no books are checked out
+        if (amountOfCheckedOutBooks == 0) {
             System.out.println("it seems like no books have been checked out yet. How about you check one out?");
             System.out.println("What would you like to do? ");
             System.out.println("-(1)- Check out a book\n-(2)- Go back home?");
             System.out.print("Enter your command: ");
             String userChoice = scanner.nextLine();
-            switch (userChoice){
-                case "1": showAvailableBooks(scanner); break;
-                case "2": displayHomeScreen(); break;
+            switch (userChoice) {
+                case "1":
+                    showAvailableBooks(scanner);
+                    break;
+                case "2":
+                    displayHomeScreen();
+                    break;
                 default:
                     System.out.println("Invalid option! Please choose again.\n");
                     showCheckedOutBooks(scanner); // Display the books screen again for invalid input
@@ -110,14 +132,17 @@ public class NeighborhoodLibrary {
             }
         }
 
-
         System.out.println("What would you like to do? ");
         System.out.println("-(1)- Check in a book\n-(2)- Go back home?");
         System.out.print("Enter your command: ");
         String userChoice = scanner.nextLine();
-        switch (userChoice){
-            case "1": checkInBook(scanner); break;
-            case "2": displayHomeScreen(); break;
+        switch (userChoice) {
+            case "1":
+                checkInBook(scanner);
+                break;
+            case "2":
+                displayHomeScreen();
+                break;
             default:
                 System.out.println("Invalid option! Please choose again.\n");
                 showCheckedOutBooks(scanner); // Display the books screen again for invalid input
@@ -125,122 +150,149 @@ public class NeighborhoodLibrary {
         }
     }
 
-    public static void checkInBook(Scanner scanner){
+    public static void checkInBook(Scanner scanner) {
+        // Ask user for the ID of the book they want to check in
         System.out.print("What is (ID) of the book you want to Check in?: ");
         int bookIdChoosen = scanner.nextInt();
-        scanner.nextLine(); //catch scanner buffer
+        scanner.nextLine(); // catch scanner buffer
         String bookTitle = "";
+        // Check if book has been checked in and also if it exists
         boolean updateIsCheckedIn = true;
-        Boolean checkIfBookIDExits = false;
+        Boolean checkIfBookIDExists = false;
 
-        for(Book book : bookInventory){
-            if(bookIdChoosen == book.getId()){
+        // loop through the array to update checkIfBookIDExists
+        for (Book book : bookInventory) {
+            if (bookIdChoosen == book.getId()) {
                 bookTitle = book.getTitle();
-                checkIfBookIDExits = true; // Set to true when book is found
+                checkIfBookIDExists = true; // Set to true when book is found
                 break;
             }
         }
 
-        for(Book book : bookInventory){
-            if(bookIdChoosen == book.getId() && book.isCheckedOut()){
+        // Loop through to see if INPUTTED ID matches any books Id that is checked out
+        for (Book book : bookInventory) {
+            if (bookIdChoosen == book.getId() && book.isCheckedOut()) {
+                // Update the two variables
                 updateIsCheckedIn = false;
-                checkIfBookIDExits = true;
-                System.out.printf("The Book: %s has been checked in \n",book.getTitle());
+                checkIfBookIDExists = true;
+                System.out.printf("The Book: %s has been checked in \n", book.getTitle());
                 System.out.printf("Thank you %s for turning it in on time", book.getCheckedOutTo());
+                // Update the setters for that class
                 book.setCheckedOutTo("");
                 book.setCheckedOut(updateIsCheckedIn);
                 System.out.println();
+                // Get Current date
                 LocalDate currentDate = LocalDate.now();
                 // Define the date format
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
                 // Format the dates
                 String formattedCurrentDate = currentDate.format(formatter);
+                // Thank the user
                 System.out.println("****** Check-In Book Summary ******");
-                System.out.printf("Title: %s - ID: %d  - Checked-in on: %s \n", book.getTitle(), book.getId(), formattedCurrentDate);
+                System.out.printf("Title: %s - ID: %d  - Checked-in on: %s \n", book.getTitle(), book.getId(),
+                        formattedCurrentDate);
             }
         }
 
-        if(!checkIfBookIDExits){
+        // Error handle if user types an ID that doesn't exist in inventory
+        if (!checkIfBookIDExists) {
             System.out.printf("Sorry the book of ID: %d does not exist in our inventory\n", bookIdChoosen);
-        }else if(updateIsCheckedIn){
-            System.out.printf("Sorry the book of ID: %d - Title: %s has not been checked out yet!\n", bookIdChoosen, bookTitle);
+        } else if (updateIsCheckedIn) {
+            // Error handle if user types in a book ID that hasn't been checked out yet
+            System.out.printf("Sorry the book of ID: %d - Title: %s has not been checked out yet!\n", bookIdChoosen,
+                    bookTitle);
         }
-
+        // Prompt the user a thank-you and repeat program
         askUserAgain(scanner);
 
     }
 
-
     public static void checkoutBook(Scanner scanner) {
+        // Ask user for the ID of the book they want to check out
         System.out.print("What is (ID) of the book you want to checkout?: ");
         int bookIdChoosen = scanner.nextInt();
-        scanner.nextLine(); //catch scanner buffer
+        scanner.nextLine(); // catch scanner buffer
         String bookTitle = "";
+        // Check if book has not been checked in and also if it exists
         boolean updateIsCheckedOut = false;
-        Boolean checkIfBookIDExits = false;
+        Boolean checkIfBookIDExists = false;
 
-        for(Book book : bookInventory){
-            if(bookIdChoosen == book.getId()){
+        // loop through the array to update checkIfBookIDExists
+        for (Book book : bookInventory) {
+            if (bookIdChoosen == book.getId()) {
                 bookTitle = book.getTitle();
-                checkIfBookIDExits = true; // Set to true when book is found
+                checkIfBookIDExists = true; // Set to true when book is found
                 break;
             }
         }
 
-        for(Book book : bookInventory){
-            if(bookIdChoosen == book.getId() && !book.isCheckedOut()){
+        // Loop through to see if INPUTTED ID matches any book ID that has not been
+        // checked out yet.
+        for (Book book : bookInventory) {
+            if (bookIdChoosen == book.getId() && !book.isCheckedOut()) {
+                // Update the two variables
                 updateIsCheckedOut = true;
-                checkIfBookIDExits = true;
-                System.out.printf("The Book: %s is Avaliable for checkout \n",book.getTitle());
+                checkIfBookIDExists = true;
+                System.out.printf("The Book: %s is Avaliable for checkout \n", book.getTitle());
                 System.out.print("May I have your name for checkout, please? ");
+                // Update the setters for that class
                 book.setCheckedOutTo(scanner.nextLine());
                 book.setCheckedOut(updateIsCheckedOut);
                 System.out.println();
+                // Get Current date
                 LocalDate currentDate = LocalDate.now();
-
                 // Add 15 days to the current date
                 LocalDate futureDate = currentDate.plusDays(15);
-
                 // Define the date format
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
                 // Format the dates
                 String formattedCurrentDate = currentDate.format(formatter);
                 String formattedFutureDate = futureDate.format(formatter);
+                // Thank the user and show the summary
                 System.out.println("****** Checkout Book Summary ******");
-                System.out.printf("Title: %s - ID: %d  - Checked Out to: %s \n", book.getTitle(), book.getId(), book.getCheckedOutTo());
+                System.out.printf("Title: %s - ID: %d  - Checked Out to: %s \n", book.getTitle(), book.getId(),
+                        book.getCheckedOutTo());
                 System.out.println("Book is due in 15 days from today's date");
                 System.out.printf("Please return by %s\n", futureDate);
             }
         }
 
-        if(!checkIfBookIDExits){
+        // Error handle if user types an ID that doesn't exist in inventory
+        if (!checkIfBookIDExists) {
             System.out.printf("Sorry the book of ID: %d does not exist in our inventory\n", bookIdChoosen);
-        }else if(!updateIsCheckedOut){
-            System.out.printf("Sorry the book of ID: %d - Title: %s is checked out already sorry!\n", bookIdChoosen, bookTitle);
+        } else if (!updateIsCheckedOut) {
+            // Error handle if user types in a book ID that has been checked out
+            System.out.printf("Sorry the book of ID: %d - Title: %s is checked out already sorry!\n", bookIdChoosen,
+                    bookTitle);
         }
 
+        // Prompt the user a thank you and repeat program
         askUserAgain(scanner);
 
     }
 
-    public static void askUserAgain(Scanner scanner){
+    public static void askUserAgain(Scanner scanner) {
+        // Thank the user
         System.out.print("Thank you for visting Javapedia can we help you with anything else? (yes/no): ");
         String userChoice = scanner.nextLine().toLowerCase();
-
-        switch (userChoice){
-            case "yes" : displayHomeScreen();break;
-            case "no" :
+        // Check what the user typed
+        switch (userChoice) {
+            case "yes":
+                displayHomeScreen();
+                break;
+            case "no":
                 System.out.println("Bye now thanks for visting Javapedia EST 1995");
             default:
+                // Prompt user again if they type something wrong
                 System.out.println("Sorry please say (yes/no)");
                 askUserAgain(scanner);
                 break;
         }
 
-
     }
 
-    public static void preLoadBooks(){
+    public static void preLoadBooks() {
+        // Manually preload the Books array of Class Book
         bookInventory[0] = new Book(1, "9780684801469", "To Kill a Mockingbird", true, "Lionel Messi");
         bookInventory[1] = new Book(2, "9780061122415", "Diary of a Wimpy Kid", false, "");
         bookInventory[2] = new Book(3, "9781451673319", "The Great Gatsby", true, "Lebron James");
