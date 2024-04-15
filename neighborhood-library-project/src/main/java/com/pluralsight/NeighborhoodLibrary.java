@@ -282,6 +282,7 @@ public class NeighborhoodLibrary {
                 break;
             case "no":
                 System.out.println("Bye now thanks for visting Javapedia EST 1995");
+                break;
             default:
                 // Prompt user again if they type something wrong
                 System.out.println("Sorry please say (yes/no)");
