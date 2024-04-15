@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class NeighborhoodLibrary {
@@ -59,6 +61,67 @@ public class NeighborhoodLibrary {
     // TODO: FINISH METHOD FOR CHECKOUT
     // TODO: PDF FILE 3/5
     public static void checkoutBook(Scanner scanner) {
+        System.out.print("What is (ID) of the book you want to checkout?: ");
+        int bookIdChoosen = scanner.nextInt();
+        scanner.nextLine(); //catch scanner buffer
+        boolean updateIsCheckedOut = false;
+        String bookTitle = "";
+
+        for(Book book : bookInventory){
+            if(bookIdChoosen == book.getId()){
+                bookTitle = book.getTitle();
+                break;
+            }
+        }
+
+        for(Book book : bookInventory){
+            if(bookIdChoosen == book.getId() && !book.isCheckedOut()){
+                updateIsCheckedOut = true;
+                System.out.print("What is your name sweetie So I can check you out? ");
+                book.setCheckedOutTo(scanner.nextLine());
+                book.setCheckedOut(updateIsCheckedOut);
+                System.out.println();
+                LocalDate currentDate = LocalDate.now();
+
+                // Add 15 days to the current date
+                LocalDate futureDate = currentDate.plusDays(15);
+
+                // Define the date format
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
+                // Format the dates
+                String formattedCurrentDate = currentDate.format(formatter);
+                String formattedFutureDate = futureDate.format(formatter);
+                System.out.println("****** Checkout Book Summary ******");
+                System.out.printf("Title: %s - ID: %d  - Checked Out to: %s \n", book.getTitle(), book.getId(), book.getCheckedOutTo());
+                System.out.println("Book is due in 15 days from today's date");
+                System.out.printf("Please return by %s\n", futureDate);
+            }
+        }
+
+
+        //TODO: FIX ERROR FOR OUT OF BOUNDS
+        if(!updateIsCheckedOut){
+            System.out.printf("Sorry the book of ID: %d - Title: %s is checked out already sorry!\n", bookIdChoosen, bookTitle);
+        }
+
+        askUserAgain(scanner);
+
+    }
+
+    public static void askUserAgain(Scanner scanner){
+        System.out.print("Thank you for visting Javapedia can we help you with anything else? (yes/no): ");
+        String userChoice = scanner.nextLine().toLowerCase();
+
+        switch (userChoice){
+            case "yes" : displayHomeScreen();break;
+            case "no" :
+                System.out.println("Bye now thanks for visting Javapedia EST 1995");
+            default:
+                System.out.println("Sorry please say (yes/no)");
+                askUserAgain(scanner);
+                break;
+        }
+
 
     }
 
